@@ -30,6 +30,7 @@
 #
 
 # bibliotecas necessárias de manipulação de dados
+import csv
 import pandas as pd
 from haversine import haversine
 import numpy as np
