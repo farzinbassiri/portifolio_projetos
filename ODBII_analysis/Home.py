@@ -51,13 +51,10 @@ import math
 # Arquivos de entrada e saída
 
 #define arquivo de origem dos dados e converte a coluna de data para o formato adequado
-df_GPS = pd.read_csv("trackLog_DW.csv")
+df_GPS = pd.read_csv('trackLog_DW.csv')
 df_GPS['Device Time'] = pd.to_datetime(df_GPS['Device Time'])
-# testar adicionar:
-#df_GPS = pd.read_csv('trackLog_DW.csv', parse_dates=['Data inicial'])
-# assim não precisa fazer conversão depois de ler o arquivo
 
-df_analise1 = pd.read_csv("trackLog_DW - Consumo.csv")
+df_analise1 = pd.read_csv('trackLog_DW - Consumo.csv')
 df_analise1['Data inicial'] = pd.to_datetime(df_analise1['Data inicial'])
 #--------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------
