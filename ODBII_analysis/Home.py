@@ -54,7 +54,7 @@ import math
 df_GPS = pd.read_csv('ODBII_analysis/trackLog_DW.csv')
 df_GPS['Device Time'] = pd.to_datetime(df_GPS['Device Time'])
 
-df_analise1 = pd.read_csv('../dataset/trackLog_DW - Consumo.csv')
+df_analise1 = pd.read_csv('ODBII_analysis/trackLog_DW - Consumo.csv')
 df_analise1['Data inicial'] = pd.to_datetime(df_analise1['Data inicial'])
 
 
