@@ -93,7 +93,7 @@ df_analise1['Data inicial'] = pd.to_datetime(df_analise1['Data inicial'])
 st.header('OBDII - Torque Pro - Análise dados veiculares')
 
 #Carrega o logo 
-image = Image.open('logo_ODBII.jpg')
+image = Image.open('ODBII_analysis/logo_ODBII.jpg')
 st.sidebar.image(image, width=120)
 
 st.sidebar.markdown('# Análise de Dados Veiculares - Via ODBII')
