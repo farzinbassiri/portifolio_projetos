@@ -121,7 +121,7 @@ st.sidebar.markdown("""___""")
 #obs: os dados podem não ser normais, neste caso, fazer pequenos agrupamentos de dados e tirar a média deles torna os dados normais. 
 st.sidebar.markdown('## Resample para normalização dos dados')
 resample_slider = st.sidebar.slider(
-     'Defina a quantidade de minutos a serem concatenados em uma amostra:',
+     'Defina a quantidade de pontos a serem concatenados em uma amostra:',
      1,
      20,
      value = 5)
