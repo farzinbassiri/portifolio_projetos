@@ -11,7 +11,7 @@ import streamlit.components.v1 as components
 # carregando a base de dados
 # dados obtidos no site: https://www.kaggle.com/datasets/akashram/zomato-restaurants-autoupdated-dataset?resource=download&select=zomato.csv
 #Correção do caminho da base de dados para ser compativel com o streamlit:
-df_raw = pd.read_csv('dataset/zomato.csv')
+df_raw = pd.read_csv('/dataset/zomato.csv')
 
 df = data_wrangling(df_raw)
 
