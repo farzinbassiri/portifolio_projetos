@@ -55,7 +55,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Cidades assistidas'
             graph_label = 'Total de Países com Restaurantes Cadastrados'
-            max_width = 700
+            max_width = 600
             max_height = 500
             operacao = 'nunique'
             #deixa o filtro vazio, assim irá buscar todos os dados
@@ -78,7 +78,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Quantidade de Restaurantes'
             graph_label = 'Total de Restaurantes Cadastrados'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'count'
             #deixa o filtro vazio, assim irá buscar todos os dados
@@ -105,7 +105,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Quantidade de Restaurantes'
             graph_label = 'Restaurantes Estilo "Gourmet"'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'count'            
 
@@ -129,7 +129,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Quantidade'
             graph_label = 'Tipos de culinária disponíveis'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'nunique'
             #deixa o filtro vazio, assim irá buscar todos os dados
@@ -155,7 +155,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Quantidade'
             graph_label = 'Total de Avaliações Realizadas'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'sum'
 
@@ -179,7 +179,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Quantidade'
             graph_label = 'Restaurantes que fazem entrega'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'count'
 
@@ -205,7 +205,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Quantidade'
             graph_label = 'Restaurantes que aceitam reserva'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'count'
 
@@ -228,7 +228,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Votos por restaurante cadastrado'
             graph_label = 'Paises com mais cultura de votos'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'sum'
 
@@ -257,7 +257,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Notas [0 a 5]'
             graph_label = 'Paises com melhores avaliações'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'mean'
 
@@ -282,7 +282,7 @@ with tab1: # 'Visão Geral'
             x_label = 'País'
             y_label = 'Valor em USD'
             graph_label = 'Custo médio para 2 pessoas'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'mean'
 
@@ -307,7 +307,7 @@ with tab2: # 'Visão Geral %'
         x_label = 'País'
         y_label = 'Quantidade de Restaurantes'
         graph_label = 'Total de Restaurantes Cadastrados'
-        max_width = 700
+        max_width = 600
         max_height = 500                        
         operacao = 'count'
         #deixa o filtro vazio, assim irá buscar todos os dados
@@ -332,7 +332,7 @@ with tab2: # 'Visão Geral %'
             x_label = 'País'
             y_label = '% Restaurantes'
             graph_label = 'Restaurantes Estilo "Gourmet"'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'count'            
             grafico_percentual = True
@@ -355,7 +355,7 @@ with tab2: # 'Visão Geral %'
             x_label = 'País'
             y_label = '% de restaurantes'
             graph_label = 'Tipos de culinária disponíveis'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'nunique'
             grafico_percentual = True
@@ -380,7 +380,7 @@ with tab2: # 'Visão Geral %'
             x_label = 'País'
             y_label = 'Quantidade de votos por restaurante'
             graph_label = 'Cultura de Avaliação dos Restaurantes'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'sum'
             grafico_percentual = True
@@ -403,7 +403,7 @@ with tab2: # 'Visão Geral %'
             x_label = 'País'
             y_label = '% restaurantes'
             graph_label = 'Has Online delivery'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'count'
             grafico_percentual = True
@@ -428,7 +428,7 @@ with tab2: # 'Visão Geral %'
             x_label = 'País'
             y_label = '% de Restaurantes'
             graph_label = 'Restaurantes que aceitam reserva'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'count'
 
@@ -451,7 +451,7 @@ with tab2: # 'Visão Geral %'
             x_label = 'País'
             y_label = 'Notas [0 a 5]'
             graph_label = 'Paises com melhores avaliações'
-            max_width = 700
+            max_width = 600
             max_height = 500                        
             operacao = 'mean'
 
