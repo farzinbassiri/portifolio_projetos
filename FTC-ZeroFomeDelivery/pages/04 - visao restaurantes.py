@@ -86,8 +86,8 @@ with tab1: # 'Visão Geral'
                 graph_label = 'TOP ' + str(top_mode) + ' Restaurantes mais avaliados'
             else:
                 graph_label = 'Restaurantes mais avaliados'
-            #max_width = 1280
-            #max_height = 700
+            max_width = 600
+            max_height = 500
             operacao = 'sum'
             #deixa o filtro vazio, assim irá buscar todos os dados
             filtro = pd.DataFrame({'A' : []})
