@@ -102,7 +102,7 @@ with tab1: # 'Visão Geral'
         x_axis = 'City'
         y_axis = 'Aggregate rating'
         x_label = 'Cidade'
-        y_label = 'Quantidade de Restaurantes'
+        y_label = 'Nota média'
         if top_mode != 'all':
             graph_label = 'TOP ' + str(top_mode) + ' Restaurantes melhor avaliados (nota > 4)'
         else:
@@ -128,7 +128,7 @@ with tab1: # 'Visão Geral'
         x_axis = 'City'
         y_axis = 'Aggregate rating'
         x_label = 'Cidade'
-        y_label = 'Quantidade de Restaurantes'
+        y_label = 'Nota média'
         if top_mode != 'all':
             graph_label = 'TOP ' + str(top_mode) + ' Restaurantes pior avaliados (nota < 2.5)'
         else:
