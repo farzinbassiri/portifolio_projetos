@@ -231,6 +231,27 @@ def data_wrangling(df):
     linhas_selecionadas = (df['Rating text'] == 'Not rated')
     df.loc[linhas_selecionadas, 'Rating_note'] = 100
 
+    #renomeia para colocar numeração - facilitando ordenação nos gráficos
+    linhas_selecionadas = (df['Rating text'] == 'Excellent')
+    df.loc[linhas_selecionadas, 'Rating text'] = '5-Excellent'
+
+    linhas_selecionadas = (df['Rating text'] == 'Very Good')
+    df.loc[linhas_selecionadas, 'Rating text'] = '4-Very Good'
+
+    linhas_selecionadas = (df['Rating text'] == 'Good')
+    df.loc[linhas_selecionadas, 'Rating text'] = '3-Good'
+
+    linhas_selecionadas = (df['Rating text'] == 'Average')
+    df.loc[linhas_selecionadas, 'Rating text'] = '2-Average'
+
+    linhas_selecionadas = (df['Rating text'] == 'Poor')
+    df.loc[linhas_selecionadas, 'Rating text'] = '1-Poor'
+
+    #coloca um valor impossível para ser depois trocado pelo valor médio do pais
+    linhas_selecionadas = (df['Rating text'] == 'Not rated')
+    df.loc[linhas_selecionadas, 'Rating text'] = '0-Not rated' 
+    
+    
     #converte avaliações em numero
     df['Rating_note'] = df['Rating_note'].astype(int)    
     
@@ -301,7 +322,7 @@ def grafico_barras(dados_relativos, filtro, df1, operacao, cols, group_by_col, s
                                           .iloc[0,1])
 
                 percentual.loc[row,cols[1]] = pais
-                percentual.loc[row,cols[0]] = np.round(100*(numerador/denominador),1)
+                percentual.loc[row,cols[0]] = np.round((numerador/denominador),1)
             df_aux = percentual
     else:
         #se vai por cor nas colunas
@@ -378,7 +399,7 @@ def grafico_barras(dados_relativos, filtro, df1, operacao, cols, group_by_col, s
             title_text = y_label,
             title_font = {"size": 14},
             tickfont_size=12)    
-    return fig
+    return fig, df_aux
 
 
 
@@ -444,4 +465,141 @@ def grafico_country_map(df1, cols, group_by_col, latitude, longitude):
 
 
 embed_component = {'linkedin':"""<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-                  <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/farzinbassiri?trk=profile-badge">Farzin Bassiri</a></div>"""}
+                  <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="farzinbassiri" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/farzinbassiri?trk=profile-badge">"""}
+
+
+
+
+def grafico_boxplot(dados_relativos, filtro, df1, operacao, cols, group_by_col, sort_by_col, sort_by_col_order, 
+                   x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, color_attribute, top_mode):
+    percentual = pd.DataFrame()
+    
+    if filtro.empty == True:
+        #não faz filtro
+        if operacao == 'nunique':
+            df_aux = df1.loc[:,cols].groupby(group_by_col).nunique().sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()
+        elif operacao == 'count':
+            df_aux = df1.loc[:, cols].groupby(group_by_col).count().sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()    
+        elif operacao == 'sum':
+            df_aux = df1.loc[:, cols].groupby(group_by_col).sum().sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()    
+        elif operacao == 'mean':
+            df_aux = df1.loc[:, cols].groupby(group_by_col).mean().round(decimals=2).sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()
+            
+        elif operacao == 'none':
+            df_aux = df1.loc[:, cols].sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()    
+            
+    else:
+        # faz filtro
+        if operacao == 'nunique':
+            df_aux = df1.loc[filtro,cols].groupby(group_by_col).nunique().sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()
+        elif operacao == 'count':
+            df_aux = df1.loc[filtro, cols].groupby(group_by_col).count().sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()
+        elif operacao == 'sum':
+            df_aux = df1.loc[filtro, cols].groupby(group_by_col).sum().sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()    
+        elif operacao == 'mean':
+            df_aux = df1.loc[filtro, cols].mean().round(decimals=2).sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()         
+        elif operacao == 'none':
+            df_aux = df1.loc[filtro, cols].sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()                  
+
+    # altera o nome da coluna ID
+    #df_aux.columns = [x_axis, y_axis]
+    
+    if color_attribute == False:  
+        #se não vai por cor nas colunas
+        if dados_relativos == True:
+            # determina o numero total de restaurantes por pais
+            df_qde_rest = (df1.loc[:,[cols[0], cols[1]]]
+                               .groupby(cols[1])
+                               .count()
+                               .sort_values(cols[0], ascending = False)
+                               .reset_index())    
+
+            # calcula os dados relativos
+            for row in df_aux.index:
+                pais = df_aux.loc[row,cols[1]] 
+                numerador = df_aux.loc[row, cols[0]]
+                denominador = (df_qde_rest.loc[df_qde_rest[cols[1]] == pais]
+                                          .iloc[0,1])
+
+                percentual.loc[row,cols[1]] = pais
+                percentual.loc[row,cols[0]] = np.round(100*(numerador/denominador),1)
+            df_aux = percentual
+    else:
+        #se vai por cor nas colunas
+        # determina o numero total de restaurantes por pais
+        if dados_relativos == True:
+            df_qde_rest = (df1.loc[:,[cols[0], cols[1], cols[2]]]
+                               .groupby([cols[1], cols[2]])
+                               .count()
+                               .sort_values(cols[0], ascending = False)
+                               .reset_index())    
+
+            # calcula os dados relativos
+            for row in df_aux.index:
+                pais = df_aux.loc[row,cols[1]] 
+                numerador = df_aux.loc[row, cols[0]]
+                denominador = (df_qde_rest.loc[df_qde_rest[cols[1]] == pais]
+                                          .iloc[0,2])
+                percentual.loc[row,cols[2]] = df_aux.loc[row,cols[2]] 
+                percentual.loc[row,cols[1]] = pais
+                percentual.loc[row,cols[0]] = np.round(100*(numerador/denominador),1)
+            df_aux = percentual    
+            
+    df_aux = df_aux.sort_values(sort_by_col, ascending = sort_by_col_order)
+    
+    if top_mode != 'all':
+        #df_aux = df_aux.iloc[0:(top_mode-1), :]
+        df_mean = df1.loc[filtro, cols].mean().round(decimals=2).sort_values(sort_by_col, ascending = sort_by_col_order).reset_index()
+        filtro_topmode = df_mean[0:top_mode, group_by_col]
+        
+    
+    # define a escala do gráfico, coloca o ponto de máximo do eixo em 20% acima do valor máximo a ser exibido
+    #graph_range = df_aux[y_axis].max()*1.2
+    # gráfico
+    fig = px.box(df_aux, x= x_axis, y=y_axis, width=max_width, height=max_height, labels={ x_axis: x_label, y_axis: y_label}, title=graph_label)
+    fig.update_layout(barmode='stack', xaxis={'categoryorder': 'total descending'})    
+    # configura o título do gráfico
+    # title_x --> alinhamento central;  
+    # Se < 0.5 --> desloca à esquerda
+    # Se > 0.5 --> desloca à direita
+    fig.update_layout(
+            title_font = {"size": 20},
+            font_family="Arial",
+            font_color="Black",
+            title_font_family="Arial",
+            title_font_color="black",
+            title_x=0.25)
+    # configura os títulos dos eixos
+    fig.update_xaxes(
+            tickangle = 45,
+            title_text = x_label,
+            title_font = {"size": 14},
+            tickfont_size=12)
+
+    fig.update_yaxes(
+            title_text = y_label,
+            title_font = {"size": 14},
+            tickfont_size=12)    
+    return fig, df_aux
+
+def avalia_pais(x_label, y_label, graph_label, max_width, max_height, df_aux):
+    fig = px.bar(df_aux, y= 'Votes', x='Rating text', title=graph_label, width=max_width, height=max_height)
+    fig.update_layout(title_font = {"size": 20},
+                    font_family="Arial",
+                    font_color="Black",
+                    title_font_family="Arial",
+                    title_font_color="black",
+                    title_x=0.25,
+                    xaxis={'categoryorder': 'category descending'})
+    # configura os títulos dos eixos
+    fig.update_xaxes(
+            tickangle = 45,
+            title_text = x_label,
+            title_font = {"size": 14},
+            tickfont_size=12)
+
+    fig.update_yaxes(
+            title_text = y_label,
+            title_font = {"size": 14},
+            tickfont_size=12)                        
+    return fig
