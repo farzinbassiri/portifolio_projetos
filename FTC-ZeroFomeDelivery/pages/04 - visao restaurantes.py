@@ -8,13 +8,24 @@ import streamlit as st
 
 # carregando a base de dados
 # dados obtidos no site: https://www.kaggle.com/datasets/akashram/zomato-restaurants-autoupdated-dataset?resource=download&select=zomato.csv
-#Correção do caminho da base de dados para ser compativel com o streamlit:
 df_raw = pd.read_csv('FTC-ZeroFomeDelivery/dataset/zomato.csv') 
+#df_raw = pd.read_csv('dataset\\zomato.csv')
 df = data_wrangling(df_raw)
 st.set_page_config(page_title= 'Visão Cidades', layout='wide')
 #--------------------------------------------------------------
 #                    Barra Lateral    
 #--------------------------------------------------------------
+#filtro de avaliações realizadas
+filtro_votes = st.sidebar.selectbox('Incluir restaurantes sem avaliação?', ('não', 'sim'))
+if filtro_votes == 'não':
+    filtro_votes = df['Votes'] != 0
+    df = df.loc[filtro_votes,:]
+
+#filtro de valor de prato
+filtro_AVG_cost_4_2 = st.sidebar.selectbox('Incluir restaurantes sem registro de custo de prato?', ('não', 'sim'))
+if filtro_AVG_cost_4_2 == 'não':
+    filtro_AVG_cost_4_2 = df['Aggregate rating'] != 0
+    df = df.loc[filtro_AVG_cost_4_2,:]
 
 #filtro de TOP x restaurantes:
 top_mode = st.sidebar.selectbox('Colocar todos os restaurantes?', ('não', 'sim'))
@@ -43,67 +54,72 @@ filtro_pais = df['Country_Name'].isin(country_options)
 df = df.loc[filtro_pais,:]
 
 
-
+# definição global de tamanho dos gráficos
+max_width = 700
+max_height = 600
 #--------------------------------------------------------------
 #           Layout do dashboard - usando streamlit    
 #--------------------------------------------------------------
 
 #Abas com as diferentes métricas 
 
-tab1, tab2, tab3 = st.tabs(['Indicadores Absolutos', '-', '-'])
+tab1, tab2, tab3 = st.tabs(['Visão Restaurantes', '-', '-'])
 
 # separa os códigos para cada aba
 # todo código que estiber em 'with tab1 vai aparecer naquela aba
 
 with tab1: # 'Visão Geral'
     with st.container():
-        # 1. Qual o nome do restaurante que possui a maior quantidade de avaliações?
-        cols = ['Restaurant Name', 'Votes', 'Country_Name']
-        group_by_col = ['Restaurant Name', 'Country_Name']
-        sort_by_col = 'Votes'
-        sort_by_col_order = [False] 
-        x_axis = 'Restaurant Name'
-        y_axis = 'Votes'
-        x_label = 'Restaurantes'
-        y_label = 'Quantidade de votos'
-        if top_mode != 'all':
-            graph_label = 'TOP ' + str(top_mode) + ' Restaurantes mais avaliados'
-        else:
-            graph_label = 'Restaurantes mais avaliados'
-        max_width = 1280
-        max_height = 700
-        operacao = 'sum'
-        #deixa o filtro vazio, assim irá buscar todos os dados
-        filtro = pd.DataFrame({'A' : []})
-        grafico_percentual = False
+        col1, col2 = st.columns(2, gap="large")
         
-        fig = grafico_barras(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order, 
-                              x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, color_mode, top_mode)
-        st.plotly_chart(fig, use_conteiner_width = False) 
+        with col1:
+            # 1. Qual o nome do restaurante que possui a maior quantidade de avaliações?
+            cols = ['Restaurant Name', 'Votes', 'Country_Name']
+            group_by_col = ['Restaurant Name', 'Country_Name']
+            sort_by_col = 'Votes'
+            sort_by_col_order = [False] 
+            x_axis = 'Restaurant Name'
+            y_axis = 'Votes'
+            x_label = 'Restaurantes'
+            y_label = 'Quantidade de avaliações'
+            if top_mode != 'all':
+                graph_label = 'TOP ' + str(top_mode) + ' Restaurantes mais avaliados'
+            else:
+                graph_label = 'Restaurantes mais avaliados'
+            #max_width = 1280
+            #max_height = 700
+            operacao = 'sum'
+            #deixa o filtro vazio, assim irá buscar todos os dados
+            filtro = pd.DataFrame({'A' : []})
+            grafico_percentual = False
 
-    with st.container():
-        #2. Qual o nome do restaurante com a maior nota média?
-        cols = ['Restaurant Name', 'Restaurant ID', 'Aggregate rating', 'Country_Name']
-        group_by_col = ['Restaurant Name', 'Country_Name']
-        sort_by_col = ['Aggregate rating', 'Restaurant ID']
-        sort_by_col_order = [False, True] 
-        x_axis = 'Restaurant Name'
-        y_axis = 'Aggregate rating'
-        x_label = 'Restaurantes'
-        y_label = 'Nota média'
-        if top_mode != 'all':
-            graph_label = 'TOP ' + str(top_mode) + ' Restaurantes com maior nota média'
-        else:
-            graph_label = 'Restaurantes com maior nota média'
-        max_width = 1280
-        max_height = 700
-        operacao = 'mean'
-        #deixa o filtro vazio, assim irá buscar todos os dados
-        filtro = pd.DataFrame({'A' : []})
-        grafico_percentual = False
-        fig = grafico_barras(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order, 
-                              x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, color_mode, top_mode)
-        st.plotly_chart(fig, use_conteiner_width = False) 
+            fig, df_aux = grafico_barras(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order, 
+                                  x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, color_mode, top_mode)
+            st.plotly_chart(fig, use_conteiner_width = False) 
+
+        with col2:
+            #2. Qual o nome do restaurante com a maior nota média?
+            cols = ['Restaurant Name', 'Restaurant ID', 'Aggregate rating', 'Country_Name']
+            group_by_col = ['Restaurant Name', 'Country_Name']
+            sort_by_col = ['Aggregate rating', 'Restaurant ID']
+            sort_by_col_order = [False, True] 
+            x_axis = 'Restaurant Name'
+            y_axis = 'Aggregate rating'
+            x_label = 'Restaurantes'
+            y_label = 'Nota média'
+            if top_mode != 'all':
+                graph_label = 'TOP ' + str(top_mode) + ' Restaurantes com maior nota média'
+            else:
+                graph_label = 'Restaurantes com maior nota média'
+            #max_width = 1280
+            #max_height = 700
+            operacao = 'mean'
+            #deixa o filtro vazio, assim irá buscar todos os dados
+            filtro = pd.DataFrame({'A' : []})
+            grafico_percentual = False
+            fig, df_aux = grafico_barras(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order, 
+                                  x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, color_mode, top_mode)
+            st.plotly_chart(fig, use_conteiner_width = False) 
 
     with st.container():
         #3. Qual o nome do restaurante que possui o maior valor de uma prato para duas pessoas?
@@ -119,13 +135,13 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Restaurantes mais caros'
         else:
             graph_label = 'Restaurantes mais caros'
-        max_width = 1280
-        max_height = 700
+        #max_width = 1280
+        #max_height = 700
         operacao = 'mean'
         #deixa o filtro vazio, assim irá buscar todos os dados
         filtro = pd.DataFrame({'A' : []})
         grafico_percentual = False
-        fig = grafico_barras(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order, 
+        fig, df_aux = grafico_barras(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order, 
                               x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, color_mode, top_mode)
         st.plotly_chart(fig, use_conteiner_width = False) 
         
