@@ -376,7 +376,7 @@ with tab1: # 'Visão Geral'
             fig, df_aux = grafico_boxplot(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order,
                                  x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, False, 'all')
             
-            texto = '### País com prato mais caro:'
+            texto = '### País valor médio de prato mais caro:'
             st.info(texto)
             texto = str(df_mean.iloc[0,0]) + ': $' +  str(df_mean.iloc[0,1])
             st.metric(label= '', value= texto, delta=None, delta_color="normal", help=None, label_visibility="visible")               
