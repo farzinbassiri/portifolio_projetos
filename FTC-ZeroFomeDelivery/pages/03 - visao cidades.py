@@ -56,6 +56,9 @@ country_options = st.sidebar.multiselect(
 filtro_pais = df['Country_Name'].isin(country_options)
 df = df.loc[filtro_pais,:]
 
+# definição global de tamanho dos gráficos
+max_width = 1024
+max_height = 700
 #--------------------------------------------------------------
 #           Layout do dashboard - usando streamlit    
 #--------------------------------------------------------------
@@ -82,8 +85,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Cidades com mais Restaurantes Cadastrados'
         else:
             graph_label = 'Restaurantes mais votados'        
-        max_width = 1024
-        max_height = 700
+        #max_width = 1280
+        #max_height = 700
         operacao = 'nunique'
         #deixa o filtro vazio, assim irá buscar todos os dados
         filtro = pd.DataFrame({'A' : []})
@@ -107,8 +110,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Restaurantes melhor avaliados (nota > 4)'
         else:
             graph_label = 'Restaurantes melhor avaliados (nota > 4)'        
-        max_width = 1280
-        max_height = 600                        
+        #max_width = 1280
+        #max_height = 600                        
         operacao = 'mean'
         filtro = df['Aggregate rating'] > 4
 
@@ -133,8 +136,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Restaurantes pior avaliados (nota < 2.5)'
         else:
             graph_label = 'Restaurantes pior avaliados (nota < 2.5)'
-        max_width = 1280
-        max_height = 600                        
+        #max_width = 1280
+        #max_height = 600                        
         operacao = 'mean'
         filtro = df['Aggregate rating'] <2.5
 
@@ -159,8 +162,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Cidades com pratos mais caros'
         else:
             graph_label = 'Cidades com pratos mais caros'
-        max_width = 1280
-        max_height = 600                        
+        #max_width = 1280
+        #max_height = 600                        
         operacao = 'mean'
         #deixa o filtro vazio, assim irá buscar todos os dados
         filtro = pd.DataFrame({'A' : []})
@@ -186,8 +189,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Cidades com maior diversidade culinária'
         else:
             graph_label = 'Cidades com maior diversidade de culinária'
-        max_width = 1280
-        max_height = 600                        
+        #max_width = 1280
+        #max_height = 600                        
         operacao = 'nunique'
         #deixa o filtro vazio, assim irá buscar todos os dados
         filtro = pd.DataFrame({'A' : []})
@@ -214,8 +217,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Cidades com mais Restaurantes que fazem Reserva'
         else:
             graph_label = 'Cidades com mais restaurantes que fazem reserva'
-        max_width = 1280
-        max_height = 600                        
+        #max_width = 1280
+        #max_height = 600                        
         operacao = 'count'
         filtro = df.loc[:, sort_by_col] == True
 
@@ -239,8 +242,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Cidades com mais restaurantes que fazem entrega'
         else:
             graph_label = 'Cidades que fazem entrega'
-        max_width = 1280
-        max_height = 600                        
+        #max_width = 1280
+        #max_height = 600                        
         operacao = 'count'
         filtro = df.loc[:, sort_by_col] == True
 
@@ -265,8 +268,8 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Cidades com restaurantes que aceitam pedidos online'
         else:
             graph_label = 'Cidades com restaurantes que aceitam pedidos online'
-        max_width = 1280
-        max_height = 600                        
+        #max_width = 1280
+        #max_height = 600                        
         operacao = 'count'
         filtro = df.loc[:, sort_by_col] == True
 
