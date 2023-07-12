@@ -99,28 +99,44 @@ with tab1: # 'Visão Geral'
 
         with col2:
             #2. Qual o nome do restaurante com a maior nota média?
-            cols = ['Restaurant Name', 'Restaurant ID', 'Aggregate rating', 'Country_Name']
-            group_by_col = ['Restaurant Name', 'Country_Name']
+            cols = ['Restaurant Name', 'Restaurant ID', 'Aggregate rating', 'AVG_cost_4_2', 'City', 'Country_Name']
+            group_by_col = ['Restaurant Name', 'Aggregate rating', 'AVG_cost_4_2', 'City', 'Country_Name']
             sort_by_col = ['Aggregate rating', 'Restaurant ID']
             sort_by_col_order = [False, True] 
-            x_axis = 'Restaurant Name'
-            y_axis = 'Aggregate rating'
-            x_label = 'Restaurantes'
-            y_label = 'Nota média'
-            if top_mode != 'all':
-                graph_label = 'TOP ' + str(top_mode) + ' Restaurantes com maior nota média'
-            else:
-                graph_label = 'Restaurantes com maior nota média'
-            #max_width = 1280
-            #max_height = 700
+            col_calc = 'Aggregate rating'
             operacao = 'mean'
-            #deixa o filtro vazio, assim irá buscar todos os dados
-            filtro = pd.DataFrame({'A' : []})
-            grafico_percentual = False
-            fig, df_aux = grafico_barras(grafico_percentual, filtro, df, operacao, cols, group_by_col,sort_by_col, sort_by_col_order, 
-                                  x_axis, y_axis, x_label, y_label, graph_label, max_width, max_height, color_mode, top_mode)
-            st.plotly_chart(fig, use_conteiner_width = False) 
+            filtro = (df['Cuisines'] != '') 
 
+            melhores_restaurantes = classificacao(filtro, df, operacao, cols, group_by_col, sort_by_col, sort_by_col_order, col_calc)
+            texto = str(melhores_restaurantes.iloc[0,1]) + '\n / 5.0'
+            st.metric(label= '##### Restaurante com melhor nota média:  ', value= texto, delta=None, delta_color="normal", help=None, label_visibility="visible")
+            with st.expander("Mais informações:"):
+                st.write('-- Restaurante: ' + str(melhores_restaurantes.iloc[0,0]) + 
+                         '\n\n -- Localização: ' + str(melhores_restaurantes.iloc[0,3] + '/' + str(melhores_restaurantes.iloc[0,4])) +
+                         '\n\n -- Preço Médio do Prato: $' + str(np.round(melhores_restaurantes.iloc[0,2],2)))
+            
+
+            #2.b Qual o nome do restaurante com a menor nota média não nula?
+            cols = ['Restaurant Name', 'Restaurant ID', 'Aggregate rating', 'AVG_cost_4_2', 'City', 'Country_Name']
+            group_by_col = ['Restaurant Name', 'Aggregate rating', 'AVG_cost_4_2', 'City', 'Country_Name']
+            sort_by_col = ['Aggregate rating', 'Restaurant ID']
+            sort_by_col_order = [True, True] 
+            col_calc = 'Aggregate rating'
+            operacao = 'mean'
+            filtro = (df['Aggregate rating'] != 0) 
+
+            melhores_restaurantes = classificacao(filtro, df, operacao, cols, group_by_col, sort_by_col, sort_by_col_order, col_calc)
+            texto = str(melhores_restaurantes.iloc[0,1]) + '\n / 5.0'
+            st.metric(label= '##### Restaurante com pior nota média:  ', value= texto, delta=None, delta_color="normal", help=None, label_visibility="visible")
+            with st.expander("Mais informações:"):
+                st.write('-- Restaurante: ' + str(melhores_restaurantes.iloc[0,0]) + 
+                         '\n\n -- Localização: ' + str(melhores_restaurantes.iloc[0,3] + '/' + str(melhores_restaurantes.iloc[0,4])) +
+                         '\n\n -- Preço Médio do Prato: $' + str(np.round(melhores_restaurantes.iloc[0,2],2)))                
+
+
+            
+            
+            
     with st.container():
         #3. Qual o nome do restaurante que possui o maior valor de uma prato para duas pessoas?
         cols = ['Restaurant Name', 'Restaurant ID', 'AVG_cost_4_2', 'Country_Name']
@@ -165,7 +181,7 @@ with tab1: # 'Visão Geral'
             with st.expander("Mais informações:"):
                 st.write('-- Restaurante: ' + str(piores_restaurantes.iloc[0,0]) + 
                          '\n\n -- Localização: ' + str(piores_restaurantes.iloc[0,3] + '/' + str(piores_restaurantes.iloc[0,4])) +
-                         '\n\n -- Preço Médio do Prato: ' + str(piores_restaurantes.iloc[0,2]))
+                         '\n\n -- Preço Médio do Prato: $' + str(piores_restaurantes.iloc[0,2]))
 
         
         with col2:
@@ -184,7 +200,7 @@ with tab1: # 'Visão Geral'
             with st.expander("Mais informações:"):
                 st.write('-- Restaurante: ' + str(melhores_restaurantes.iloc[0,0]) + 
                          '\n\n -- Localização: ' + str(melhores_restaurantes.iloc[0,3] + '/' + str(melhores_restaurantes.iloc[0,4])) +
-                         '\n\n -- Preço Médio do Prato: ' + str(melhores_restaurantes.iloc[0,2]))
+                         '\n\n -- Preço Médio do Prato: $' + str(melhores_restaurantes.iloc[0,2]))
 
     with st.container():
         st.markdown('### Os restaurantes que aceitam pedido online são também, na média, os restaurantes que mais possuem avaliações registradas?')
