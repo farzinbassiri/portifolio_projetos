@@ -11,8 +11,8 @@ from streamlit_folium import folium_static
 
 # carregando a base de dados
 # dados obtidos no site: https://www.kaggle.com/datasets/akashram/zomato-restaurants-autoupdated-dataset?resource=download&select=zomato.csv
-#df_raw = pd.read_csv('FTC-ZeroFomeDelivery/dataset/zomato.csv') 
-df_raw = pd.read_csv('dataset\\zomato.csv')
+df_raw = pd.read_csv('FTC-ZeroFomeDelivery/dataset/zomato.csv') 
+#df_raw = pd.read_csv('dataset\\zomato.csv')
 df = data_wrangling(df_raw)
 st.set_page_config(page_title= 'Visão Geral', layout='wide')
 #--------------------------------------------------------------
