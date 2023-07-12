@@ -82,7 +82,7 @@ with tab1: # 'Visão Geral'
             graph_label = 'TOP ' + str(top_mode) + ' Cidades com mais Restaurantes Cadastrados'
         else:
             graph_label = 'Restaurantes mais votados'        
-        max_width = 1280
+        max_width = 1024
         max_height = 700
         operacao = 'nunique'
         #deixa o filtro vazio, assim irá buscar todos os dados
