@@ -237,7 +237,7 @@ with tab1: # 'Visão Geral'
             y_axis = 'Votes'
             x_label = 'País'
             y_label = 'Quantidade de avaliações por restaurante'
-            graph_label = 'Paises com mais cultura de avaliação'
+            graph_label = 'Paises maior cultura de avaliação'
             #max_width = 700
             #max_height = 500                        
             operacao = 'sum'
