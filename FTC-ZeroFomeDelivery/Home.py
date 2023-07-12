@@ -58,6 +58,7 @@ st.markdown(
     médio correspondente
 	6. Existem restaurantes não avaliados ou sem registro do valor do prato, esses restaurantes foram 
     mantidos na base e podem ser eliminados dos gráficos através dos filtros na barra lateral;
+    7. Em caso de empate entre restaurantes, será considerado o restaurante com registro mais antigo.
 
 ### III. Organização do Dashboard:
 #### i. Visão Geral:
