@@ -28,9 +28,12 @@
 
 # Bibliotecas de manipulação de arquivos
 #
+import csv
+import linecache as lc
 
 # bibliotecas necessárias de manipulação de dados
 import pandas as pd
+import re
 from haversine import haversine
 import numpy as np
 
@@ -48,17 +51,20 @@ from datetime import datetime, timedelta
 
 # bBiblioteca de função matemática
 import math
+
+st.set_page_config(page_title= 'OBDII - Análise dados veiculares - TR4', layout='wide')
+
 # Arquivos de entrada e saída
 
 #define arquivo de origem dos dados e converte a coluna de data para o formato adequado
-df_GPS = pd.read_csv('ODBII_analysis/dataset/trackLog_DW.csv')
+df_GPS = pd.read_csv('./dataset/trackLog_DW.csv')
 df_GPS['Device Time'] = pd.to_datetime(df_GPS['Device Time'])
+# testar adicionar:
+#df_GPS = pd.read_csv('trackLog_DW.csv', parse_dates=['Data inicial'])
+# assim não precisa fazer conversão depois de ler o arquivo
 
-df_analise1 = pd.read_csv('ODBII_analysis/dataset/trackLog_DW - Consumo.csv')
+df_analise1 = pd.read_csv('dataset\\trackLog_DW - Consumo.csv')
 df_analise1['Data inicial'] = pd.to_datetime(df_analise1['Data inicial'])
-
-
-
 #--------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------
 #                                ANÁLISE INICIAL DOS DADOS
@@ -93,7 +99,7 @@ df_analise1['Data inicial'] = pd.to_datetime(df_analise1['Data inicial'])
 st.header('OBDII - Torque Pro - Análise dados veiculares')
 
 #Carrega o logo 
-image = Image.open('ODBII_analysis/logo_ODBII.jpg')
+image = Image.open('logo_ODBII.jpg')
 st.sidebar.image(image, width=120)
 
 st.sidebar.markdown('# Análise de Dados Veiculares - Via ODBII')
@@ -124,7 +130,7 @@ resample_slider = st.sidebar.slider(
      'Defina a quantidade de pontos a serem concatenados em uma amostra:',
      1,
      20,
-     value = 5)
+     value = 1)
 st.sidebar.markdown('1 --> não faz resample para normalização dos dados')
 st.sidebar.markdown("""___""")
 
@@ -177,7 +183,7 @@ df_param2 = df_analise1.loc[linhas_selecionadas2,:]
 
 
 #criando abas
-tab1, tab2, tab3 = st.tabs(['Visão Geral', 'Visão "Teste"', '-'])
+tab1, tab2, tab3 = st.tabs(['Visão Geral', 'Histogramas', 'TMP'])
 
 # separa os códigos para cada aba
 # todo código que estiber em 'with tab1 vai aparecer naquela aba
@@ -276,40 +282,85 @@ with tab1:
 
         
 with tab2:
-            with st.container():
-                colunas = ['Device Time', 'km/l(Instant)', 'Fuel flow(l/h)']
-                linhas_selecionadas = (df_param['km/l(Instant)'] != 0) & (df_param['km/l(Instant)'] != 181.2480011)
-                consumo = df_param.loc[linhas_selecionadas, colunas]
-                consumo_medio = df_param.loc[linhas_selecionadas, 'km/l(Instant)'].mean()
-                tempo_inicial= consumo['Device Time'].min()
-                tempo_final= consumo['Device Time'].max()
+    with st.container():
+        colunas = ['Device Time', 'km/l(Instant)', 'Fuel flow(l/h)', 'Engine RPM', 'Speed (OBD)(km/h)']
+        linhas_selecionadas = (df_param['km/l(Instant)'] != 0) & (df_param['km/l(Instant)'] != 181.2480011)
+        consumo = df_param.loc[linhas_selecionadas, colunas]
+        consumo_medio = df_param.loc[linhas_selecionadas, 'km/l(Instant)'].mean()
+        tempo_inicial= consumo['Device Time'].min()
+        tempo_final= consumo['Device Time'].max()
 
-                if resample_slider !=1:
-                    resample_rate = str(resample_slider) + 'min'
-                    teste = consumo.resample(rule= resample_rate, on = 'Device Time', origin= 'start').mean()
-                else:
-                    teste = consumo
-                texto = 'Quantidade de pontos na amostra: ' + str(len(teste))
-                st.markdown(texto)
+        if resample_slider !=1:
+            resample_rate = str(resample_slider) + 'min'
+            teste = consumo.resample(rule= resample_rate, on = 'Device Time', origin= 'start').mean()
+        else:
+            teste = consumo
+        texto = 'Quantidade de pontos na amostra: ' + str(len(teste))
+        st.markdown(texto)
 
-                linhas_validas = teste['km/l(Instant)'] != 'NaN'
-                #transfere para o dataframe apenas as linhas que contém dados
-                teste = teste.loc[linhas_validas, :]
+        linhas_validas = teste['km/l(Instant)'] != 'NaN'
+        #transfere para o dataframe apenas as linhas que contém dados
+        teste = teste.loc[linhas_validas, :]
 
-                #nbins_slider
-                if nbins_auto:
-                    nbins_slider = int(1 + 3.322 * math.log(len(teste)))
-                fig = px.histogram(teste, 
-                                   x='Fuel flow(l/h)', 
-                                   nbins=nbins_slider,
-                                   title='Fuel Flow [l/h]', 
-                                   color_discrete_sequence=['blue'] )
-                fig.update_layout(bargap=0.2)
-                st.plotly_chart(fig, use_conteiner_width = True)  
+        #nbins_slider
+        if nbins_auto:
+            nbins_slider = int(1 + 3.322 * math.log(len(teste)))
+        fig = px.histogram(teste, 
+                           x='km/l(Instant)', 
+                           nbins=nbins_slider,
+                           title='Consumo Instantâneo [km/l]', 
+                           color_discrete_sequence=['blue'],
+                           histnorm = 'probability density')
+        fig.update_layout(bargap=0.2)
+        st.plotly_chart(fig, use_conteiner_width = True)  
+
+    with st.container():
+        fig = px.histogram(teste, 
+                           x='Speed (OBD)(km/h)', 
+                           nbins=nbins_slider,
+                           title='Velocidade [km/h]', 
+                           color_discrete_sequence=['blue'],
+                           histnorm = 'probability')
+        fig.update_layout(bargap=0.2)
+        st.plotly_chart(fig, use_conteiner_width = True) 
+        
+    with st.container():
+        fig = px.histogram(teste, 
+                           x='Engine RPM', 
+                           nbins=nbins_slider,
+                           title='Engine RPM', 
+                           color_discrete_sequence=['blue'],
+                           histnorm = 'probability')
+        fig.update_layout(bargap=0.2)
+        st.plotly_chart(fig, use_conteiner_width = True)      
+        
+    with st.container():
+        fig = px.scatter(y = teste['Engine RPM'], x = teste['Speed (OBD)(km/h)'])
+
+        # configura os títulos dos eixos
+        fig.update_xaxes(
+                tickangle = 0,
+                title_text = "Velocidade [km/h]",
+                title_font = {"size": 16})
+
+        fig.update_yaxes(
+                title_text = 'RPM do Motor',
+                title_font = {"size": 14})
+
+        # configura o título do gráfico
+            # title_x --> alinhamento central;  
+            # Se < 0.5 --> desloca à esquerda
+            # Se > 0.5 --> desloca à direita
+        fig.update_layout(title_text='Relação de Marchas', title_x=0.5)        
+        
+        st.plotly_chart(fig, use_conteiner_width = True)         
+        texto = ('percebe-se a formação de padrão de 6 marchas, os pontos de expalhamento podem ser causados pelo uso do cambio na posição "reduzida" em algumas condições: \n A 1ª marcha tem poucos pontos e é a primeira marcha no cambio reduzido, as demais marchas são sequencialmente, 1ª a 5ª em cambio normal. \n O espalhamento dos pontos é gerado também pelo uso do cambio reduzido nas marchas 2ª a 5ª, mas em incidências muito pequenas. Um estudo mais detalhado pode ser feito a respeito.')
+        
+        st.info(texto)
 
 with tab3:
     with st.container():
-        st.markdown('# Indicadores Gerais')
+        st.markdown('# Posição do pedal do acelerador')
 
         # monta o gráfico
         fig = px.bar(df_param, x= 'Device Time', y='Fuel flow(l/h)', width=700, height=400)
@@ -333,17 +384,17 @@ with tab3:
         #st.plotly_chart(fig, use_conteiner_width = True)
 
 
-#         fig2 = px.bar(df_param, x= 'Device Time', y='Engine RPM', width=700, height=400)
-#         # configura os títulos dos eixos
-#         fig2.update_xaxes(
-#                 tickangle = 0,
-#                 title_text = "Dia da amostra",
-#                 title_font = {"size": 16})
-
-#         fig2.update_yaxes(
-#                 title_text = 'Engine RPM',
-#                 title_font = {"size": 14})  
+        #fig2 = px.bar(df_param, x= 'Fuel flow(l/h)', y='Engine RPM', width=700, height=400)
+        fig2 = px.scatter(df_GPS, y = 'Engine Load(%)', x = 'Engine RPM', color = 'Throttle Position(%)', template='simple_white', width=1024, height=768)
+        # configura os títulos dos eixos
+        fig2.update_xaxes(
+                 tickangle = 0,
+                 title_text = "Engine RPM",
+                 title_font = {"size": 16})
+        fig2.update_yaxes(
+                 title_text = 'Engine Load(%)',
+                 title_font = {"size": 14})  
+       
+        fig2.update_layout(title_text='Uso do motor', title_x=0.5)
         
-#         fig2.update_layout(title_text='RMP do motor', title_x=0.5)
-        
-        #st.plotly_chart(fig2, use_conteiner_width = True)     
+        st.plotly_chart(fig2, use_conteiner_width = False)     
