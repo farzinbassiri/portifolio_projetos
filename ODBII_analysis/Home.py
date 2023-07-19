@@ -57,13 +57,13 @@ st.set_page_config(page_title= 'OBDII - Análise dados veiculares - TR4', layout
 # Arquivos de entrada e saída
 
 #define arquivo de origem dos dados e converte a coluna de data para o formato adequado
-df_GPS = pd.read_csv('./dataset/trackLog_DW.csv')
+df_GPS = pd.read_csv('ODBII_analysis/dataset/trackLog_DW.csv')
 df_GPS['Device Time'] = pd.to_datetime(df_GPS['Device Time'])
 # testar adicionar:
 #df_GPS = pd.read_csv('trackLog_DW.csv', parse_dates=['Data inicial'])
 # assim não precisa fazer conversão depois de ler o arquivo
 
-df_analise1 = pd.read_csv('dataset\\trackLog_DW - Consumo.csv')
+df_analise1 = pd.read_csv('ODBII_analysis/dataset/trackLog_DW - Consumo.csv') 
 df_analise1['Data inicial'] = pd.to_datetime(df_analise1['Data inicial'])
 #--------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ df_analise1['Data inicial'] = pd.to_datetime(df_analise1['Data inicial'])
 #--------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------
 
-st.header('OBDII - Torque Pro - Análise dados veiculares')
+st.header('OBDII - Análise dados veiculares')
 
 #Carrega o logo 
 image = Image.open('logo_ODBII.jpg')
