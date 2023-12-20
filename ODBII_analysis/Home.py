@@ -25,6 +25,8 @@
 #--------------------------------------------------------------------------------------------------------------
 
 # Definindo as bibliotecas a serem importadas:
+# biblioteca de aprendizado de máquina
+from sklearn.linear_model  import LinearRegression
 
 # Bibliotecas de manipulação de arquivos
 #
