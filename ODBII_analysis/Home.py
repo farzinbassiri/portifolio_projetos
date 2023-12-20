@@ -152,8 +152,9 @@ nbins_slider = st.sidebar.slider(
 
 
 st.sidebar.markdown("""___""")
-st.sidebar.markdown('###### Powered by Farzin Bassiri')
 st.sidebar.markdown("module 'sklearn.linear_model' is installed")
+st.sidebar.markdown('###### Powered by Farzin Bassiri')
+
 
 
 # aplica os filtros do sidebar na tabela de dados
