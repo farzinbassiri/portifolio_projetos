@@ -51,7 +51,7 @@ import folium
 # Bibliotecas de manipulação de tempo
 from datetime import datetime, timedelta
 
-# bBiblioteca de função matemática
+# Biblioteca de função matemática
 import math
 
 st.set_page_config(page_title= 'OBDII - Análise dados veiculares - TR4', layout='wide')
@@ -153,6 +153,7 @@ nbins_slider = st.sidebar.slider(
 
 st.sidebar.markdown("""___""")
 st.sidebar.markdown('###### Powered by Farzin Bassiri')
+st.sidebar.markdown("module 'sklearn.linear_model' is installed")
 
 
 # aplica os filtros do sidebar na tabela de dados
