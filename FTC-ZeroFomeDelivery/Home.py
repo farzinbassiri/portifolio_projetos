@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 import streamlit.components.v1 as components
+from sklearn.linear_model  import LinearRegression #just for test
 #from PIL import Image
 
 # carregando a base de dados
