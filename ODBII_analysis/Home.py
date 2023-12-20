@@ -105,7 +105,7 @@ image = Image.open('ODBII_analysis/logo_ODBII.jpg')
 st.sidebar.image(image, width=120)
 
 st.sidebar.markdown('# Análise de Dados Veiculares - Via ODBII')
-st.sidebar.markdown('## Dados de funcionamento Pajero TR4 Flex 2009')
+st.sidebar.markdown('## Dados de funcionamento Mitsubishi TR4 Flex 2009')
 st.sidebar.markdown("""___""")
 st.sidebar.markdown('## Selecione um intevalo de datas para análise')
 
