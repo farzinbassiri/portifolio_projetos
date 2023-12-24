@@ -35,10 +35,10 @@ st.set_page_config(page_title= 'Aprendizado de Máquina - Classificação - KNN'
 #define arquivo de origem dos dados, como o formato do path é diferente para uso local e Streamlit, então faz os dois jeitos...
 # exibe o path de trabalho desse notebook
 # print(pwd)
-try: #caminho para  Streamlit
-    df_raw = pd.read_csv('Amostragem_de_Dados/dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
+try: #caminho para  uso local
+    df_raw = pd.read_csv('dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
 except: #caminho para uso local
-    df_raw = pd.read_csv('Dataset\\trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
+    df_raw = pd.read_csv('Amostragem_de_Dados\\Dataset\\trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
 
 df_raw= df_raw.convert_dtypes()
 
