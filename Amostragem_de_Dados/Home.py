@@ -44,7 +44,7 @@ st.header('O Poder da Amostragem Adequada na Classificação de Dados:')
 st.subheader('Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
 st.markdown("""___""")
 st.sidebar.markdown('## Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
-Carrega o logo 
+#Carrega o logo 
 try: #caminho para Streamlit
     image = Image.open('Amostragem_de_Dados/logo_cambio.jpg')
 except: #caminho para uso local
