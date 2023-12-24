@@ -30,16 +30,12 @@ from sklearn               import model_selection        as ms
 
 st.set_page_config(page_title= 'Aprendizado de Máquina - Classificação - KNN', layout='wide')
 
-# Arquivos de entrada e saída
-
-#define arquivo de origem dos dados, como o formato do path é diferente para uso local e Streamlit, então faz os dois jeitos...
-# exibe o path de trabalho desse notebook
-# print(pwd)
-try: #caminho para  uso local
-	#Device Time;Engine RPM;Fuel flow(l/h);Speed (OBD)(km/h);Relacao;Marcha_Train2;Marcha_Train1
+# Arquivos de entrada
+try: #caminho para Streamlit
     df_raw = pd.read_csv('Amostragem_de_Dados/Dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
-except: #caminho para Streamlit
+except: #caminho para uso local
     df_raw = pd.read_csv('Dataset\\trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
+
 
 df_raw= df_raw.convert_dtypes()
 
@@ -62,7 +58,7 @@ st.markdown("""___""")
 st.sidebar.markdown('## Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
 #Carrega o logo 
 try: #caminho para Streamlit
-    image = Image.open('ODBII_analysis/logo_cambio.jpg')
+    image = Image.open('Amostragem_de_Dados/logo_cambio.jpg')
 except: #caminho para uso local
     image = Image.open('logo_cambio.jpg')
 st.sidebar.image(image, width=240)
