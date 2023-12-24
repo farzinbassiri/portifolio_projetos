@@ -45,11 +45,11 @@ st.subheader('Classificação e predição da posição da alavanca do câmbio d
 st.markdown("""___""")
 st.sidebar.markdown('## Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
 #Carrega o logo 
-try: #caminho para Streamlit
-    image = Image.open('logo_cambio.jpg')
-except: #caminho para uso local
-    image = Image.open('\\Amostragem_de_Dados\\logo_cambio.jpg')
-st.sidebar.image(image, width=240)
+#try: #caminho para Streamlit
+#    image = Image.open('logo_cambio.jpg')
+#except: #caminho para uso local
+#    image = Image.open('\\Amostragem_de_Dados\\logo_cambio.jpg')
+#st.sidebar.image(image, width=240)
 
 st.sidebar.markdown("""___""")
 #coloca o objeto LinkedIn na barra lateral
