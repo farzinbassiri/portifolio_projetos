@@ -37,7 +37,7 @@ st.set_page_config(page_title= 'Aprendizado de Máquina - Classificação - KNN'
 # print(pwd)
 try: #caminho para  uso local
 	#Device Time;Engine RPM;Fuel flow(l/h);Speed (OBD)(km/h);Relacao;Marcha_Train2;Marcha_Train1
-    df_raw = pd.read_csv('dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
+    df_raw = pd.read_csv('Amostragem_de_Dados/Dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
 except: #caminho para Streamlit
     df_raw = pd.read_csv('Dataset\\trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
 
@@ -257,7 +257,7 @@ with tab1:
 			st.write('Acurácia sobre dados de teste: ' + str(np.round(acc_test_model2,4)))
 			st.write('Acurácia sobre produção: ' + str(np.round(acc_prod_model2,4)))
 
-		with st.expander("Comentário Inicial:"):
+		with st.expander("Comentário:"):
 			st.write('O modelo foi capaz de fazer uma boa generalização dos dados quando esses estavam "longe" das amostras usadas para a Estratégia Treino-Validação-Teste')
 			
 
