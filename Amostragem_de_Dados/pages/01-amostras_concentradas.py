@@ -36,9 +36,9 @@ st.set_page_config(page_title= 'Aprendizado de Máquina - Classificação - KNN'
 # exibe o path de trabalho desse notebook
 # print(pwd)
 try: #caminho para  uso local
-    df_raw = pd.read_csv('Amostragem_de_Dados/Dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
+    df_raw = pd.read_csv('Dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
 except: #caminho para Streamlit
-    df_raw = pd.read_csv('Amostragem_de_Dados\\Dataset\\trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
+    df_raw = pd.read_csv('Dataset\\trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
 
 df_raw= df_raw.convert_dtypes()
 
@@ -62,7 +62,7 @@ st.markdown("""___""")
 st.sidebar.markdown('## Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
 #Carrega o logo 
 try: #caminho para Streamlit
-    image = Image.open('Amostragem_de_Dados/logo_cambio.jpg')
+    image = Image.open('ODBII_analysis/logo_cambio.jpg')
 except: #caminho para uso local
     image = Image.open('logo_cambio.jpg')
 st.sidebar.image(image, width=240)
@@ -239,9 +239,9 @@ with tab1:
 			st.write('Acurácia sobre dados de teste: ' + str(np.round(acc_test_model1,4)))
 			st.write('Acurácia sobre produção: ' + str(np.round(acc_prod_model1,4)))
 
-		with st.expander("Comentário Inicial:"):
+		with st.expander("Comentário:"):
 			st.write('O modelo não foi capaz de fazer uma boa generalização dos dados quando esses estavam "longe" das amostras usadas para a Estratégia Treino-Validação-Teste')
-			st.write('Dados inéditos ao modelo que estavam próximos à região de concentração dos dados de treino foram bem classificados pelo algoritmo, mas a concentração das amostras prejudicou a capacidade de classificação de dados mais distantes')
+			st.write('Nenhum valor alternativo do parâmetro k foi capaz de melhorar significamente a classificação dos dados de produção.')
 			
 	with st.container():
 		# cria o gráfico que mostra o dataset e as amostras

@@ -108,10 +108,10 @@ Na barra lateral é possivel:
 	* caso o valor de K seja definido pelo usuário, o gráfico que mostra o resultado do Elbow Method é suprimido do dashboard;
 * Definir a faixa de valores a ser utilizada pelo Elbow Method, aumentar a faixa pode impactar a velocidade do algoritmo;
 * Para as amostras concentradas: 
-	* Alterar a quantidade de amostras destinadas ao teste, as amostras restantes serão sempre igualmente divididas entre Validação e Teste;
+	* Alterar a quantidade de amostras destinadas ao treino, as amostras restantes serão sempre igualmente divididas entre Validação e Teste;
 * Para as amostras aleatórias:
 	* Alterar a quantidade total de amostras disponíveis para Treino-Validação-Teste. A barra de seleção apresenta o valor percentual em relação à totalidade de dados disponíveis;
-	* Alterar a quantidade de amostras destinadas ao teste, as amostras restantes serão sempre igualmente divididas entre Validação e Teste;
+	* Alterar a quantidade de amostras destinadas ao treino, as amostras restantes serão sempre igualmente divididas entre Validação e Teste;
 	
 """)
 
@@ -122,18 +122,18 @@ st.markdown("""
 st.markdown("""Detalhamento dos dados coletados: 
  * Dados obtidos via dispositivo conectado à interface ODBII e app Torque Pro durante o uso do app entre 22/jun/2023 e 01/nov/2023.
 * Arquivo exportado para formato CSV pelo proprio app.
- Os dados obtidos são:
+ As variáveis obtidas e mantidas após a organização e limpeza dos dados (data wrangling) são:
  	* Device Time   --> data e hora da coleta do dado	
 	* Engine RPM	--> velocidade do motor em Rotações por Minuto (RPM)
 	* Fuel flow(l/h)	--> vazão de combustivel no motor. Essa métrica permite avaliar consumo de combustivel com o veículo parado, por exemplo
 	* Speed (OBD)(km/h) --> velocidade do veiculo
-    * Relacao --> dado adicionado ao dataset durante data wrangling: é a razão entre velocidade do motor e velocidade do veículo, ou seja a "relação da marcha". É esperado haver um cluster de dados para cada marcha, onde o valor central de cada marcha é:
+    * Relacao --> dado adicionado ao dataset durante a organização e limpeza dos dados: é a razão entre velocidade do motor e velocidade do veículo, ou seja a "relação da marcha". É esperado haver um cluster de dados para cada marcha, onde o valor central de cada marcha é:
 		* 1ª marcha: 145
 		* 2ª marcha: 73
 		* 3ª marcha: 48
 		* 4ª marcha: 37
 		* 5ª marcha: 31
-    * Marcha --> dado adicionado ao dataset durante o data wrangling: é a posição do câmbio para aquele dado, ou seja, a marcha. Esse é o campo de "label" para o algoritmo Essa coluna possui dois formatos a serem carregados ao longo do estudo:
+    * Marcha --> dado adicionado ao dataset durante o data wrangling: é a posição do câmbio para aquele dado, ou seja, a marcha. Esse é o campo de "label" para o modelo de classificação. Essa coluna possui dois formatos a serem carregados ao longo do estudo:
 		* Amostragem concentrada em 3 regiões da faixa de dados:
 			* Indicação da marcha correta inseridas na região de 1.000 RPM, 2.000 RPM, 3.000 RPM (apenas 1ª marcha) e 4.000 RPM (demais marchas)
 		* Amostragem ampla, varrendo toda a faixa de dados.  
