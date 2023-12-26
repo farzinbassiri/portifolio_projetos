@@ -48,7 +48,7 @@ st.sidebar.markdown('## Classificação e predição da posição da alavanca do
 try: #caminho para Streamlit
     image = Image.open('Amostragem_de_Dados/logo_cambio.jpg')
 except: #caminho para uso local
-    image = Image.open('logo_cambio.jpg')
+	image = Image.open('logo_cambio.jpg')
 st.sidebar.image(image, width=240)
 
 st.sidebar.markdown("""___""")
@@ -72,7 +72,8 @@ st.markdown("""A qualidade da amostragem de dados de treinamento desempenha um p
 """)
 
 st.markdown('### II. Contextualizando o Estudo:')
-st.markdown("""A qualidade da amostragem de dados de treinamento desempenha um papel crucial no sucesso dos algoritmos de classificação. Neste breve artigo, vou compartilhar insights valiosos provenientes de um estudo que estou conduzindo sobre diferentes algoritmos de classificação, destacando como duas abordagens distintas na amostragem dos mesmos dados podem determinar o êxito ou o fracasso do algoritmo escolhido.""")
+st.markdown("""Neste breve artigo, vou compartilhar insights valiosos provenientes de um estudo que estou conduzindo sobre diferentes algoritmos de classificação, destacando como duas abordagens distintas na amostragem dos mesmos dados podem determinar o êxito ou o fracasso do algoritmo escolhido.  
+	Estou utilizando um conjunto de dados composto por cerca de 200.000 amostras, obtidas através de um dispositivo conectado à interface veicular OBDII, juntamente com o aplicativo Torque Pro. Os dados foram coletados do sistema de injeção eletrônica do meu carro do dia a dia em diferentes situações de condução. """)
 
 st.markdown('### III. Sobre os dados:')
 st.markdown("""O conjunto de dados possui 20 graus de liberdade, incluindo informações como data e hora da coleta, consumo instantâneo de combustível, velocidade do veículo, velocidade do motor, fluxo de combustível para o motor, posição do pedal do acelerador, emissão média de carbono, entre outras.  
