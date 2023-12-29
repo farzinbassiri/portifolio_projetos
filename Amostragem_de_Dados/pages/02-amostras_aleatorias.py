@@ -306,8 +306,8 @@ with tab1:
 		ax[1].xaxis.set_major_formatter(ticker.FormatStrFormatter('%0.0f'))
 
 		# cria a legenda nos gráficos
-		ax[0].legend(['1ª marcha','2ª marcha','3ª marcha','4ª marcha','5ª marcha'], fontsize=9, loc='upper left')
-		ax[1].legend(['1ª marcha','2ª marcha','3ª marcha','4ª marcha','5ª marcha'], fontsize=9, loc='upper left')
+		ax[0].legend(['5ª marcha','4ª marcha','3ª marcha','2ª marcha','1ª marcha'], fontsize=9, loc='upper left')
+		ax[1].legend(['5ª marcha','4ª marcha','3ª marcha','2ª marcha','1ª marcha'], fontsize=9, loc='upper left')
 
 		plt.tight_layout()		
 		st.pyplot(fig, use_container_width=True)		
@@ -432,7 +432,7 @@ with tab1:
 		#ax[0].yaxis.set_ticks(np.arange(0, end, 20))
 		#ax[0].yaxis.set_major_formatter(ticker.FormatStrFormatter('%0.0f'))
 
-		plt.legend(['1ª marcha','2ª marcha','3ª marcha','4ª marcha','5ª marcha'], fontsize=9, loc='upper left')
+		plt.legend(['5ª marcha','4ª marcha','3ª marcha','2ª marcha','1ª marcha'], fontsize=9, loc='upper left')
 		plt.text(1000, 125, 'Erro de predição: cada reta representa uma marcha, \nlogo deveria haver apenas uma cor por reta.', color='dimgray', fontsize=11)
 
 		plt.tight_layout()
@@ -512,7 +512,7 @@ with tab1:
 
 
 		ax[2,1].set_title('Todas juntas')
-		ax[2,1].legend(['1ª marcha','2ª marcha','3ª marcha','4ª marcha','5ª marcha'], fontsize=9, loc='upper left')
+		ax[2,1].legend(['5ª marcha','4ª marcha','3ª marcha','2ª marcha','1ª marcha'], fontsize=9, loc='upper left')
 
 		plt.tight_layout()		
 		st.pyplot(fig, use_container_width=True)

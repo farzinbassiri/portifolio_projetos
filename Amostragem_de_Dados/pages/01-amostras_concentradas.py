@@ -30,11 +30,7 @@ from sklearn               import model_selection        as ms
 
 st.set_page_config(page_title= 'Aprendizado de Máquina - Classificação - KNN', layout='wide')
 
-# Arquivos de entrada e saída
-
-#define arquivo de origem dos dados, como o formato do path é diferente para uso local e Streamlit, então faz os dois jeitos...
-# exibe o path de trabalho desse notebook
-# print(pwd)
+# Arquivos de entrada
 try: #caminho para Streamlit
     df_raw = pd.read_csv('Amostragem_de_Dados/Dataset/trackLog_civic_dados_limpos.csv', delimiter=';', low_memory=False, usecols=[1,2,3,4,5,6])
 except: #caminho para uso local
@@ -102,7 +98,7 @@ tam2_amostras_slider = st.sidebar.slider(
 	disabled = train_range_auto)/100
 
 if train_range_auto:
-	tam2_amostras_slider = 0.8
+	tam2_amostras_slider = 0.7
 
 st.sidebar.markdown("""___""")
 #coloca o objeto LinkedIn na barra lateral
@@ -389,7 +385,7 @@ with tab1:
 		#ax[0].yaxis.set_ticks(np.arange(0, end, 20))
 		#ax[0].yaxis.set_major_formatter(ticker.FormatStrFormatter('%0.0f'))
 
-		plt.legend(['1ª marcha','2ª marcha','3ª marcha','4ª marcha','5ª marcha'], fontsize=9, loc='upper left')
+		plt.legend(['5ª marcha','4ª marcha','3ª marcha','2ª marcha','1ª marcha'], fontsize=9, loc='upper left')
 		plt.text(1000, 125, 'Erro de predição: cada reta representa uma marcha, \nlogo deveria haver apenas uma cor por reta.', color='dimgray', fontsize=11)
 
 		plt.tight_layout()
