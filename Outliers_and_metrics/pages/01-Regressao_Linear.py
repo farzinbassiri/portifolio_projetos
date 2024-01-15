@@ -48,7 +48,7 @@ st.subheader('Influência de Outliers nas Métricas de Performance.')
 st.sidebar.markdown('## Regressão Linear: Influência de Outliers nas Métricas de Performance.')
 #Carrega o logo 
 try: #caminho para Streamlit
-    image = Image.open('Amostragem_de_Dados/logo.jpg')
+    image = Image.open('Outliers_and_metrics/logo.jpg')
 except: #caminho para uso local
 	image = Image.open('logo.jpg')
 st.sidebar.image(image, width=240)
