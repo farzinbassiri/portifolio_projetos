@@ -8,8 +8,6 @@ import pandas as pd
 import numpy as np
 
 # bibliotecas de visualização de dados:
-import plotly.express as px
-from summarytools         import dfSummary
 from matplotlib           import pyplot  as plt
 
 # biblioteca de aprendizado de máquina
