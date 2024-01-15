@@ -37,7 +37,7 @@ st.markdown("""___""")
 st.sidebar.markdown('## Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
 #Carrega o logo 
 try: #caminho para Streamlit
-    image = Image.open('Amostragem_de_Dados/logo.jpg')
+    image = Image.open('Outliers_and_metrics/logo.jpg')
 except: #caminho para uso local
 	image = Image.open('logo.jpg')
 st.sidebar.image(image, width=240)
