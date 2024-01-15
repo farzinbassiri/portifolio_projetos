@@ -31,10 +31,10 @@ embed_component = {'linkedin':"""<script src="https://platform.linkedin.com/badg
                   <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="farzinbassiri" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/farzinbassiri?trk=profile-badge">"""}
 
 
-st.header('O Poder da Amostragem Adequada na Classificação de Dados:')
-st.subheader('Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
+st.header('Regressão Linear:')
+st.subheader('Influência de Outliers nas Métricas de Performance.')
 st.markdown("""___""")
-st.sidebar.markdown('## Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
+st.sidebar.markdown('## Regressão Linear: Influência de Outliers nas Métricas de Performance.')
 #Carrega o logo 
 try: #caminho para Streamlit
     image = Image.open('Outliers_and_metrics/logo.jpg')
@@ -62,7 +62,7 @@ st.markdown("""Ao iniciar os estudos sobre as métricas de desempenho nas regres
 
 Neste estudo utilizei as métricas:  
 - RMSE:  
-	Erro Quadrático Médio de Raiz. Em resumo, ele mede a diferença média entre os valores previstos por um modelo (neste caso a regressão linear) e os valores reais observados. Ele leva em conta o tamanho da diferença ao elevar as diferenças ao quadrado, o que penaliza mais erros maiores. Por fim, calcula a raiz média quadrada desses quadrados para obter uma unidade de medida (normalmente a mesma das variáveis do modelo).  
+	Erro Quadrático Médio de Raiz. Em resumo, ele mede a diferença média entre os valores previstos por um modelo (neste caso a regressão linear) e os valores reais observados. Ele leva em conta o tamanho da diferença ao elevar as diferenças ao quadrado, o que penaliza mais erros maiores. Por fim, calcula a raiz quadrada desses quadrados para obter de forma a obter a mesma unidade de medida das variáveis do modelo.
 				
 - MAPE:  
 	O MAPE calcula a média das diferenças percentuais entre os valores previstos por um modelo (neste caso a regressão linear) e os valores reais observados. Ele mede o erro como uma porcentagem da magnitude real do valor, tornando-o útil para comparar performance do modelo em dados com grande escala de valores.
@@ -70,27 +70,27 @@ Neste estudo utilizei as métricas:
 	O Erro Médio Absoluto (MAE) é uma métrica de desempenho em regressão linear que mede a diferença média entre os valores previstos por um modelo e os valores reais observados. Ele é calculado como a média dos erros absolutos, ou seja, o valor absoluto da diferença entre o valor previsto e o valor real.
 
 - R²:  
-Coeficiente de determinação (R²): O R² é uma medida da variância dos dados explicada pela regressão. Quando outliers são adicionados a um conjunto de dados, o R² geralmente diminui. Isso ocorre porque os outliers são valores que não estão bem representados pela linha de regressão.
+Coeficiente de determinação (R²): O R² é uma medida da variância dos dados explicada pela regressão. Quando outliers são adicionados a um conjunto de dados, o R² geralmente diminui. Isso ocorre porque os outliers são valores que não estão bem representados pela linha de regressão. O R² varia entre 0 e 1, sendo 1 o valor para uma regressão linear perfeita.
 
 """)
 
 
 st.markdown('### III. Metodologia:')
-st.markdown("""Para adicionar outliers a um conjunto de dados, é necessário criar um vetor indexador. O vetor indexador é criado com números inteiros aleatórios, entre 0 e o tamanho do conjunto de dados.\n
-O tamanho do vetor indexador é definido como um percentual do tamanho do conjunto de dados.  \n
+st.markdown("""Para adicionar outliers a um conjunto de dados, criei um vetor indexador. O vetor indexador foi criado com números inteiros aleatórios, entre 0 e o tamanho do conjunto de dados.\n
+O tamanho do vetor indexador foi definido como um percentual do tamanho do conjunto de dados.  \n
 Por exemplo, se o conjunto de dados tem 1.000 pontos e é desejado 10% de outliers, o vetor terá 100 pontos.  \n
-O vetor indexador é, então, utilizado para apontar quais elementos do conjunto de dados serão alterados.  \n
-Os valores pares do vetor são acrescidos de um valor fixo, enquanto os valores impares são decrementados do mesmo valor.
+O vetor indexador foi, então, utilizado para apontar quais elementos do conjunto de dados seriam alterados.  \n
+Os valores pares do vetor foram acrescidos de um valor fixo, enquanto os valores impares foram decrementados do mesmo valor.
 """)
 
 st.markdown('### V. Organização do Dashboard:')
 st.markdown("""O dashboard possui uma barra lateral de configurações. O usuário pode deixar no modo pré-definido ou escolher:  
-- Quantidade de pontos no dataset;
-- Dispersão dos pontos no dataset;
-- Percentual de outliers a ser inserido no dataset;
-- variar a '*semente*' (seed/random_state) que irá determinar a aleatoriedade tanto do dataset quanto dos outliers;  
-- Offset dos outliers
-- Offset dos dados
+- A quantidade de pontos no dataset;
+- A dispersão dos pontos no dataset;
+- A proporção de outliers a ser inserido no dataset;
+- Variar a '*semente*' (seed/random_state) que irá determinar a aleatoriedade tanto do dataset quanto dos outliers;  
+- Definir o offset dos outliers;
+- Definir o offset dos dados.
 
 \n Na janela principal, existem 3 abas:
 - **Gráficos**:  
@@ -98,7 +98,7 @@ st.markdown("""O dashboard possui uma barra lateral de configurações. O usuár
 	- Blocos de texto com:
 		- Métricas da regressão linear;
 		- Coeficientes da regressão linear;
-		- Teste de normalidade dos resíduos (via Shapiro-Wilk)
+		- Teste de normalidade dos resíduos (via Shapiro-Wilk). Esse teste é necessário para avaliar a qualidade da regressão linear. É esperado que uma boa regressão linear gere resíduos com distribuição normal. Uma ausência de normalidade deve ser investigada.
 	- Histograma com a análise de dispersão dos resíduos da regressão linear sobre os dados de referência;
 - **Comparativo**:
 	- Gráfico dos dados sem outlier inserido (dados de referência) junto com todas as diferentes regressões lineares geradas, mostrando a variação dos coeficientes da regressão ao adicionar diferentes proporções de outliers;

@@ -1,4 +1,4 @@
-
+ 
 # Bibliotecas de manipulação de arquivos
 import linecache as lc
 
@@ -45,10 +45,10 @@ embed_component = {'linkedin':"""<script src="https://platform.linkedin.com/badg
 st.header('Regressão Linear:')
 st.subheader('Influência de Outliers nas Métricas de Performance.')
 #st.markdown("""___""")
-st.sidebar.markdown('## Classificação e predição da posição da alavanca do câmbio durante uso do veículo.')
+st.sidebar.markdown('## Regressão Linear: Influência de Outliers nas Métricas de Performance.')
 #Carrega o logo 
 try: #caminho para Streamlit
-    image = Image.open('Outliers_and_metrics/logo.jpg')
+    image = Image.open('Amostragem_de_Dados/logo.jpg')
 except: #caminho para uso local
 	image = Image.open('logo.jpg')
 st.sidebar.image(image, width=240)
@@ -468,7 +468,7 @@ with tab2:
 		
 	with st.container():
 		# Mostra a tabela com o resumo dos resultados obtidos
-		st.title('Resultado Compilado')
+		st.subheader('Resultado Compilado')
 		st.dataframe(df_result, hide_index=True, use_container_width=True, height=3+35*(percent_max+2))
 	
 		
@@ -502,8 +502,8 @@ with tab3:
 				
 			""")
 			
-			st.markdown('### III. Em construção!')
-			st.markdown("""
+			st.markdown('### III. Normalidade dos resíduos')
+			st.markdown("""Em uma versão futura desse estudo irei adicionar a análise de normalidade dos resíduos da regressão linear após a adição dos outliers.
 			""")
 			
 		
