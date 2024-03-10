@@ -27,7 +27,7 @@ max_height = 702
 # Arquivos de entrada
 
 try: #caminho para Streamlit
-    df = pd.read_excel('dataset/dataset_DW.xlsx', sheet_name='Dados_tratados')
+    df = pd.read_excel('Testes_Geoespaciais/dataset/dataset_DW.xlsx', sheet_name='Dados_tratados')
 except: #caminho para uso local
     df = pd.read_excel('dataset\\dataset_DW.xlsx', sheet_name='Dados_tratados')
 
