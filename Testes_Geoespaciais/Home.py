@@ -24,10 +24,12 @@ max_width = 1028
 max_height = 702
 
 
-# Arquivo de entrada
-df = pd.read_excel('dataset\\dataset_DW.xlsx', sheet_name='Dados_tratados')
-print(df.shape)
+# Arquivos de entrada
 
+try: #caminho para Streamlit
+    df = pd.read_excel('dataset/dataset_DW.xlsx', sheet_name='Dados_tratados')
+except: #caminho para uso local
+    df = pd.read_excel('dataset\\dataset_DW.xlsx', sheet_name='Dados_tratados')
 
 start_location = [df.loc[:, 'lat'].median(), df.loc[:,'lon'].median()]
 mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
