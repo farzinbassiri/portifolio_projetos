@@ -27,9 +27,6 @@ max_height = 702
 # Arquivos de entrada
 df = pd.read_excel('dataset_DW.xlsx', sheet_name='Dados_tratados')
 
-print(df.shape)
-
-
 start_location = [df.loc[:, 'lat'].median(), df.loc[:,'lon'].median()]
 mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
 marker_cluster = MarkerCluster().add_to(mapa)
