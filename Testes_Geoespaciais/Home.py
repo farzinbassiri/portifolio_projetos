@@ -10,7 +10,7 @@ import folium
 from folium.plugins import MarkerCluster
 from streamlit_folium import folium_static
 
-st.set_page_config(page_title= 'AMC alunos', layout='wide')
+st.set_page_config(page_title= 'Localizacao', layout='wide')
 
 #--------------------------------------------------------------
 #                    Barra Lateral    
