@@ -9,7 +9,6 @@ import streamlit.components.v1 as components
 import folium
 from folium.plugins import MarkerCluster
 from streamlit_folium import folium_static
-#from PIL import Image
 
 st.set_page_config(page_title= 'AMC alunos', layout='wide')
 
@@ -24,7 +23,9 @@ st.markdown("""___""")
 max_width = 1028
 max_height = 702
 
-df = pd.read_excel('dataset/dataset_DW.xlsx', sheet_name='Dados_tratados')
+
+# Arquivo de entrada
+df = pd.read_excel('dataset\\dataset_DW.xlsx', sheet_name='Dados_tratados')
 print(df.shape)
 
 
