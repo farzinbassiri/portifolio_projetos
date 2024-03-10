@@ -10,7 +10,7 @@ import folium
 from folium.plugins import MarkerCluster
 from streamlit_folium import folium_static
 
-st.set_page_config(page_title= 'Localizacao', layout='wide')
+st.set_page_config(page_title= 'AMC alunos', layout='wide')
 
 #--------------------------------------------------------------
 #                    Barra Lateral    
@@ -25,7 +25,13 @@ max_height = 702
 
 
 # Arquivos de entrada
-df = pd.read_excel('dataset_DW.xlsx', sheet_name='Dados_tratados')
+try: #caminho para Streamlit
+    df = pd.read_excel('Testes_Geoespaciais/dataset_DW.xlsx', sheet_name='Dados_tratados')
+except: #caminho para uso local
+    df = pd.read_excel('dataset\\dataset_DW.xlsx', sheet_name='Dados_tratados')
+
+print(df.shape)
+
 
 start_location = [df.loc[:, 'lat'].median(), df.loc[:,'lon'].median()]
 mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
