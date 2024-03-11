@@ -46,7 +46,7 @@ for index, location_info in df.iterrows():
 #criando abas
 #Abas com as diferentes métricas 
 
-tab1, tab2, tab3 = st.tabs(['Ruas com atendimentos', 'Ruas com colaboradores residentes', '-'])
+tab1, tab2, tab3 = st.tabs(['Ruas com atendimentos', 'Ruas com colaboradores residentes', 'Zona de influência'])
 
 # separa os códigos para cada aba
 # todo código que estiber em 'with tab1 vai aparecer naquela aba
@@ -58,3 +58,8 @@ with tab1:
 		
 with tab2:
 	st.markdown('# Em desenvolvimento')
+	
+	
+with tab3:
+	st.markdown('# Em desenvolvimento')
+	st.markdown('## A *zona de influência* é compreendida pela soma das regiões com atendimentos e as regiões com colaboradores residentes, formando a zona de influência positiva')
