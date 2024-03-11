@@ -53,7 +53,7 @@ tab1, tab2, tab3 = st.tabs(['Ruas com atendimentos', 'Ruas com colaboradores res
 
 with tab1: 
 	with st.container():
-		folium_static(mapa, width = max_width, height = max_height)
+		folium_static(mapa)
 		
 		
 with tab2:
