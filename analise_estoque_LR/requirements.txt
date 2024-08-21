@@ -11,3 +11,4 @@ seaborn==0.13.2
 streamlit==1.36.0
 termcolor==2.4.0
 statsmodels==0.14.2
+scikit_learn==1.5.1
