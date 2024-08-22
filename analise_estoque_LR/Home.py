@@ -257,7 +257,7 @@ st.markdown("""
 
 try: #caminho para Streamlit 
 
-    image = Image.open('Amostragem_de_Dados/Imagem 01.png') 
+    image = Image.open('analise_estoque_LR/Imagem 01.png') 
 
 except: #caminho para uso local 
 
