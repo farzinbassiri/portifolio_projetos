@@ -80,7 +80,7 @@ st.sidebar.markdown('#### - Decomposição de Séries Temporais para análise de
 
 #Carrega o logo 
 try: #caminho para Streamlit
-    image = Image.open('Amostragem_de_Dados/logo.png')
+    image = Image.open('analise_estoque_LR/logo.png')
 except: #caminho para uso local
     image = Image.open('logo.png')
 st.sidebar.image(image, width=270)
