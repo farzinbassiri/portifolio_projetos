@@ -46,9 +46,9 @@ st.set_page_config(layout="wide")
 
 # Arquivos de entrada
 try: #caminho para Streamlit
-    df_raw = pd.read_csv('LR_previsao_estoque/Dataset/Giro de Estoque.csv')
+    df_raw = pd.read_csv('analise_estoque_LR/dataset/Giro de Estoque.csv')
 except: #caminho para uso local
-    df_raw = pd.read_csv('Dataset\\Giro de Estoque.csv')
+    df_raw = pd.read_csv('..\\dataset\\Giro de Estoque.csv')
 
 # converte data em index do df e corta dados anteriores à 01/jul/2010
 df_raw['Data']= pd.to_datetime(df_raw['Data'])
