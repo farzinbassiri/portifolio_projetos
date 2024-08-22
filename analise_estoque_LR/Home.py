@@ -281,14 +281,14 @@ Ao fazer a conversão de dias corridos para dias úteis, chega-se no valor indic
 
 """) 
 
-st.markdown('### VI. Ferramentas utilizadas:') 
+st.markdown('### VI. Ferramentas Utilizadas:') 
 st.markdown(""" 
 - Bibliotecas:
     - _scipy_ através de sua função _argrelextrema_ --> cálculo de mínimos e máximos locais;
     - _holidays_ --> cálculo de dias úteis entre duas datas, considerando o calendário oficial do Brasil;
-    -_sklearn_ --> ferramentas de regressão linear e métricas;
-    
-- 
+    - _sklearn_ --> ferramentas de regressão linear e métricas;
+- Planejamento de materiais;
+- Sistemas ERP.
 
 """)
 st.markdown('### VII. Próximos Passos:') 
