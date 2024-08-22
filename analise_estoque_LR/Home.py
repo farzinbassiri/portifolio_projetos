@@ -42,7 +42,7 @@ from dateutil.relativedelta import relativedelta
 
 # Arquivos de entrada
 try: #caminho para Streamlit
-    df_raw = pd.read_csv('LR_previsao_estoque/dataset/Giro de Estoque.csv')
+    df_raw = pd.read_csv('analise_estoque_LR/dataset/Giro de Estoque.csv')
 except: #caminho para uso local
     df_raw = pd.read_csv('dataset\\Giro de Estoque.csv')
 
