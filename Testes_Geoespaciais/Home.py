@@ -8,6 +8,7 @@ import plotly.express as px
 import streamlit as st
 import streamlit.components.v1 as components
 import folium
+from streamlit_folium import st_folium
 from folium.plugins import MarkerCluster
 from streamlit_folium import folium_static
 
@@ -22,9 +23,15 @@ st.set_page_config(page_title= 'Regiões de atendimento', layout='wide')
 st.markdown('# Mapa para apoio à tomada de decisões ')
 st.markdown("""___""")
 
+st.sidebar.markdown('#### Escolha a largura desejada para o mapa')
+max_width = st.sidebar.slider('', min_value=200, value=768, max_value=2048)
+
+st.sidebar.markdown('#### Escolha a altura desejada para o mapa')
+max_height = st.sidebar.slider('', min_value=201, value=300, max_value=768)
+
 # definição global de tamanho dos gráficos
-max_width = 1024
-max_height = 700
+# max_width = 1024
+# max_height = 700
 
 
 # Arquivos de entrada
@@ -93,10 +100,12 @@ tab1, tab2, tab3 = st.tabs(['Ruas com atendimentos', 'Roteiro de Visitação', '
 # separa os códigos para cada aba
 # todo código que estiber em 'with tab1 vai aparecer naquela aba
 
+
 with tab1: 
     with st.container():
         start_location = [df.loc[:, 'lat'].median(), df.loc[:,'lon'].median()]
         mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
+        
         marker_cluster = MarkerCluster().add_to(mapa)
         #adiciona os pontos geográficos ao mapa
         for index, location_info in df.iterrows():
@@ -106,12 +115,13 @@ with tab1:
                                 popup=location_info['Endereco'], 
                                 icon=folium.Icon(icon='')
                              ).add_to(marker_cluster)
-        folium_static(mapa)
-		
-		
+        st.markdown("""___""")
+        
+        folium_static(mapa, width = max_width, height = max_height)
+        # folium_static(mapa)		
 with tab2:
     start_location = [df_mapa_1.loc[:, 'lat'].median(), df_mapa_1.loc[:,'lon'].median()]
-    m1 = folium.Map(location= start_location, min_zoom = 0, zoom_start= 15, control_scale=True)
+    m1 = folium.Map(location= start_location, min_zoom = 0, zoom_start= 15, control_scale=True, max_bounds=True)
     marker_cluster = MarkerCluster().add_to(m1)
     
     folium.Polygon(locations=org_coordinates_m1,
@@ -132,7 +142,7 @@ with tab2:
 
 
     start_location = [df_mapa_2.loc[:, 'lat'].median(), df_mapa_2.loc[:,'lon'].median()]
-    m2 = folium.Map(location= start_location, min_zoom = 0, zoom_start= 14, control_scale=True)
+    m2 = folium.Map(location= start_location, min_zoom = 0, zoom_start= 14, control_scale=True, max_bounds=True)
     marker_cluster = MarkerCluster().add_to(m2)
     
     folium.Polygon(locations=org_coordinates_m2,
@@ -151,10 +161,10 @@ with tab2:
                             icon=folium.Icon(icon='')
                          ).add_to(marker_cluster)
     
-    with st.container():
-    	folium_static(m1)
-    with st.container():
-        folium_static(m2)
+    with st.container(border=False):
+    	folium_static(m1, width = max_width, height = max_height)
+    with st.container(border=False):
+        folium_static(m2, width = max_width, height = max_height)
 
 
 
