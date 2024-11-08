@@ -27,7 +27,7 @@ st.sidebar.markdown('#### Escolha a largura desejada para o mapa')
 max_width = st.sidebar.slider('', min_value=200, value=768, max_value=2048)
 
 st.sidebar.markdown('#### Escolha a altura desejada para o mapa')
-max_height = st.sidebar.slider('', min_value=201, value=300, max_value=768)
+max_height = st.sidebar.slider('', min_value=201, value=500, max_value=768)
 
 # definição global de tamanho dos gráficos
 # max_width = 1024
@@ -84,42 +84,31 @@ df_mapa_2.lon = df_mapa_2.lon.astype('float64')
 # Lista de coordenadas (latitude, longitude)
 coordinates_m1 = df_mapa_1.loc[:,['lat','lon']].values
 coordinates_m2 = df_mapa_2.loc[:,['lat','lon']].values
+coordinates_m3 = df.loc[df.Tipo!=4,['lat','lon']].values
 
 # Organizar os pontos
 org_coordinates_m1 = organize_points(coordinates_m1)
 org_coordinates_m2 = organize_points(coordinates_m2)
-
+org_coordinates_m3 = organize_points(coordinates_m3)
 
 
 
 #criando abas
 #Abas com as diferentes métricas 
 
-tab1, tab2, tab3 = st.tabs(['Ruas com atendimentos', 'Roteiro de Visitação', 'Zona de influência'])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['Roteiro de Visitação',
+                                                    'Famílias', 
+                                                    'Equipe', 
+                                                    'Escolas',
+                                                    'Projetos & Instituições Públicas', 
+                                                    'Zona de influência', 'Zona de influência com polígono'])
 
 # separa os códigos para cada aba
 # todo código que estiber em 'with tab1 vai aparecer naquela aba
 
 
-with tab1: 
-    with st.container():
-        start_location = [df.loc[:, 'lat'].median(), df.loc[:,'lon'].median()]
-        mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
-        
-        marker_cluster = MarkerCluster().add_to(mapa)
-        #adiciona os pontos geográficos ao mapa
-        for index, location_info in df.iterrows():
-            if (location_info['lon']!=0) & (location_info['lat']!=0):
-                popup_text = 'Logradouro: ' + str(location_info['Endereco'])
-                folium.Marker( [location_info['lat'], location_info['lon']],
-                                popup=location_info['Endereco'], 
-                                icon=folium.Icon(icon='')
-                             ).add_to(marker_cluster)
-        st.markdown("""___""")
-        
-        folium_static(mapa, width = max_width, height = max_height)
-        # folium_static(mapa)		
-with tab2:
+	
+with tab1:
     start_location = [df_mapa_1.loc[:, 'lat'].median(), df_mapa_1.loc[:,'lon'].median()]
     m1 = folium.Map(location= start_location, min_zoom = 0, zoom_start= 15, control_scale=True, max_bounds=True)
     marker_cluster = MarkerCluster().add_to(m1)
@@ -166,9 +155,136 @@ with tab2:
     with st.container(border=False):
         folium_static(m2, width = max_width, height = max_height)
 
-
+with tab2: 
+    with st.container():
+        filtro = df.Tipo == 1
+        start_location = [df.loc[filtro, 'lat'].median(), df.loc[filtro,'lon'].median()]
+        mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
+        
+        marker_cluster = MarkerCluster().add_to(mapa)
+        #adiciona os pontos geográficos ao mapa
+        for index, location_info in df.loc[filtro,:].iterrows():
+            if (location_info['lon']!=0) & (location_info['lat']!=0):
+                popup_text = 'Descrição: ' + str(location_info['Descricao'])
+                folium.Marker( [location_info['lat'], location_info['lon']],
+                                popup=location_info['Descricao'], 
+                                icon=folium.Icon(icon='')
+                             ).add_to(marker_cluster)
+        st.markdown("""___""")
+        
+        folium_static(mapa, width = max_width, height = max_height)
+        # folium_static(mapa)	
 
 
 with tab3:
-	st.markdown('# Em desenvolvimento')
-	st.markdown('## A *zona de influência* é compreendida pela soma das regiões com atendimentos e as regiões com colaboradores residentes, formando a zona de influência positiva')
+    with st.container():
+        filtro = df.Tipo == 2
+        start_location = [df.loc[filtro, 'lat'].median(), df.loc[filtro,'lon'].median()]
+        mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
+        
+        marker_cluster = MarkerCluster().add_to(mapa)
+        #adiciona os pontos geográficos ao mapa
+        for index, location_info in df.loc[filtro,:].iterrows():
+            if (location_info['lon']!=0) & (location_info['lat']!=0):
+                popup_text = 'Descrição: ' + str(location_info['Descricao'])
+                folium.Marker( [location_info['lat'], location_info['lon']],
+                                popup=location_info['Descricao'], 
+                                icon=folium.Icon(icon='')
+                             ).add_to(marker_cluster)
+        st.markdown("""___""")
+        
+        folium_static(mapa, width = max_width, height = max_height)
+        # folium_static(mapa)
+       
+
+with tab4:
+    with st.container():
+        filtro = df.Tipo == 3
+        st.markdown('#### Escolas, etc')
+        start_location = [df.loc[filtro, 'lat'].median(), df.loc[filtro,'lon'].median()]
+        mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
+        
+        marker_cluster = MarkerCluster().add_to(mapa)
+        #adiciona os pontos geográficos ao mapa
+        for index, location_info in df.loc[filtro,:].iterrows():
+            if (location_info['lon']!=0) & (location_info['lat']!=0):
+                popup_text = 'Descrição: ' + str(location_info['Descricao'])
+                folium.Marker( [location_info['lat'], location_info['lon']],
+                                popup=location_info['Descricao'], 
+                                icon=folium.Icon(icon='')
+                             ).add_to(marker_cluster)
+        st.markdown("""___""")
+        
+        folium_static(mapa, width = max_width, height = max_height)
+        # folium_static(mapa)
+
+with tab5:
+    with st.container():
+        filtro = df.Tipo == 4
+        st.markdown('#### Escolas, etc')
+        start_location = [df.loc[filtro, 'lat'].median(), df.loc[filtro,'lon'].median()]
+        mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 13, control_scale=False)
+        
+        marker_cluster = MarkerCluster().add_to(mapa)
+        #adiciona os pontos geográficos ao mapa
+        for index, location_info in df.loc[filtro,:].iterrows():
+            if (location_info['lon']!=0) & (location_info['lat']!=0):
+                popup_text = 'Descrição: ' + str(location_info['Descricao'])
+                folium.Marker( [location_info['lat'], location_info['lon']],
+                                popup=location_info['Descricao'], 
+                                icon=folium.Icon(icon='')
+                             ).add_to(marker_cluster)
+        st.markdown("""___""")
+        
+        folium_static(mapa, width = max_width, height = max_height)
+        # folium_static(mapa)
+
+
+with tab6:
+    with st.container():
+        filtro = df.Tipo != 4
+        st.markdown('##### A *zona de influência* é compreendida pela soma das regiões familias e as regiões com colaboradores residentes, formando a zona de influência positiva')
+        start_location = [df.loc[filtro, 'lat'].median(), df.loc[filtro,'lon'].median()]
+        mapa = folium.Map(location= start_location, min_zoom = 0, zoom_start= 12, control_scale=False)
+        
+        marker_cluster = MarkerCluster().add_to(mapa)
+        #adiciona os pontos geográficos ao mapa
+        for index, location_info in df.loc[filtro,:].iterrows():
+            if (location_info['lon']!=0) & (location_info['lat']!=0):
+                popup_text = 'Descrição: ' + str(location_info['Descricao'])
+                folium.Marker( [location_info['lat'], location_info['lon']],
+                                popup=location_info['Descricao'], 
+                                icon=folium.Icon(icon='')
+                             ).add_to(marker_cluster)
+        st.markdown("""___""")
+        
+        folium_static(mapa, width = max_width, height = max_height)
+        # folium_static(mapa)
+
+with tab7:
+    filtro = df.Tipo != 4
+    st.markdown('##### A *zona de influência* é compreendida pela soma das regiões familias e as regiões com colaboradores residentes, formando a zona de influência positiva')
+    start_location = [df.loc[filtro, 'lat'].median(), df.loc[filtro,'lon'].median()]
+    m3 = folium.Map(location= start_location, min_zoom = 0, zoom_start= 12, control_scale=True, max_bounds=True)
+    marker_cluster = MarkerCluster().add_to(m3)
+    
+    folium.Polygon(locations=org_coordinates_m3,
+                   color="blue",
+                   weight=2,
+                   fill_color="blue",
+                   fill_opacity=0.2,
+                   fill=True).add_to(m3)
+    
+    #adiciona os pontos geográficos ao mapa
+    for index, location_info in df.iterrows():
+        if (location_info['lon']!=0) & (location_info['lat']!=0):
+            popup_text = 'Descrição: ' + str(location_info['Descricao'])
+            folium.Marker( [location_info['lat'], location_info['lon']],
+                            popup=location_info['Descricao'], 
+                            icon=folium.Icon(icon='')
+                         ).add_to(marker_cluster)
+
+    
+    with st.container(border=False):
+    	folium_static(m3, width = max_width, height = max_height)
+       
